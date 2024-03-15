@@ -1,0 +1,21 @@
+version: '3.4'
+
+services:
+  vispfrankareal:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    
+    device_cgroup_rules:
+      - 'c 81:* rmw'
+      - 'c 189:* rmw'
+    command: sleep infinity
+    environment:
+     - DISPLAY=${DISPLAY}
+     - QT_X11_NO_MITSHM=1
+    network_mode: "host"
+    tty: true
+    volumes:
+      - ../..:/workspaces:cached
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /dev:/dev
